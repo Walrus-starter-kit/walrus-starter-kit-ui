@@ -127,6 +127,16 @@
             border-color: rgba(6, 182, 212, 0.4);
         }
     </style>
+
+    <!-- Import map for Sui SDK -->
+    <script type="importmap">
+    {
+      "imports": {
+        "@mysten/sui/": "https://esm.sh/@mysten/sui@1.45.2/",
+        "@wallet-standard/app": "https://esm.sh/@wallet-standard/app@1.1.0"
+      }
+    }
+    </script>
 </head>
 
 <body class="bg-background-dark text-gray-200 font-body overflow-x-hidden selection:bg-primary selection:text-black">
@@ -155,6 +165,20 @@
                             fill-rule="evenodd"></path>
                     </svg>
                 </a>
+                <div class="h-4 w-px bg-white/10"></div>
+                <!-- Wallet Section -->
+                <div id="wallet-section" class="flex items-center gap-2">
+                    <button id="connect-wallet-btn"
+                        class="px-4 py-2 rounded bg-primary text-black font-mono text-sm font-bold hover:bg-primary-dark transition-colors">
+                        Connect Wallet
+                    </button>
+                    <div id="wallet-info" class="hidden items-center gap-2">
+                        <span id="wallet-address" class="text-xs font-mono text-gray-400"></span>
+                        <button id="disconnect-btn" class="text-xs text-red-400 hover:text-red-300">
+                            Disconnect
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -257,6 +281,73 @@
             </div>
         </div>
     </section>
+
+    <!-- Swap Section -->
+    <section id="swap-section" class="py-16 px-6 relative">
+        <div class="max-w-md mx-auto reveal">
+            <div class="glass-card glass-card-hover rounded-xl p-8 border border-white/10">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold font-mono text-white">Buy WAL</h3>
+                    <span class="px-2 py-1 text-[10px] font-mono border border-primary/30 text-primary rounded bg-primary/5">
+                        TESTNET
+                    </span>
+                </div>
+
+                <!-- Balance Display -->
+                <div id="swap-balance-row" class="flex justify-between text-sm font-mono mb-4">
+                    <span class="text-gray-400">Balance:</span>
+                    <span id="swap-balance" class="text-white font-bold">
+                        <span id="balance-value">--</span> SUI
+                    </span>
+                </div>
+
+                <!-- Input Row -->
+                <div class="flex gap-3 mb-6">
+                    <div class="flex-1 relative">
+                        <input
+                            type="number"
+                            id="swap-amount"
+                            value="1"
+                            min="0"
+                            step="0.0001"
+                            placeholder="0.00"
+                            class="w-full px-4 py-3 rounded-lg bg-black/50 border border-white/10 text-white font-mono text-lg focus:border-primary focus:outline-none transition-colors"
+                        />
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button
+                            id="max-btn"
+                            class="px-3 py-1 text-xs font-mono font-bold bg-primary/10 text-primary border border-primary/20 rounded hover:bg-primary/20 transition-colors"
+                        >
+                            MAX
+                        </button>
+                        <span class="text-white font-mono font-bold">SUI</span>
+                    </div>
+                </div>
+
+                <!-- Swap Button -->
+                <button
+                    id="swap-btn"
+                    disabled
+                    class="w-full py-4 rounded-lg font-mono font-bold text-lg transition-all duration-200 disabled:bg-gray-600 disabled:cursor-not-allowed disabled:text-gray-400 bg-primary text-black hover:bg-primary-dark"
+                >
+                    Connect Wallet to Swap
+                </button>
+
+                <!-- Error/Warning Messages -->
+                <div id="swap-messages" class="mt-4 text-center">
+                    <p id="insufficient-balance-msg" class="hidden text-red-400 text-sm font-mono">
+                        ⚠️ Insufficient balance
+                    </p>
+                    <p id="connect-wallet-msg" class="text-gray-500 text-sm font-mono">
+                        Connect wallet above to swap SUI for WAL
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="py-16 border-t border-white/5 bg-black/40">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center reveal">
@@ -681,6 +772,9 @@
             });
         });
     </script>
+
+    <!-- Swap Module -->
+    <script type="module" src="swap.js"></script>
 </body>
 
 </html>
