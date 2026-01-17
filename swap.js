@@ -37,7 +37,14 @@ class WalletManager {
     if (!wallet) {
       const wallets = this.getSuiWallets();
       if (wallets.length === 0) throw new Error('No Sui wallet found. Please install Sui Wallet or Slush wallet extension.');
-      wallet = wallets[0];
+
+      // If multiple wallets, let user choose
+      if (wallets.length > 1) {
+        wallet = await this.showWalletSelector(wallets);
+        if (!wallet) throw new Error('No wallet selected');
+      } else {
+        wallet = wallets[0];
+      }
     }
 
     const connectFeature = wallet.features['standard:connect'];
@@ -50,8 +57,79 @@ class WalletManager {
     this.account = accounts[0];
     this.connected = true;
 
+    // Save preferred wallet to localStorage
+    localStorage.setItem('preferredWallet', wallet.name);
+
     await this.refreshBalance();
     this.emit('connected', { account: this.account });
+  }
+
+  async showWalletSelector(wallets) {
+    return new Promise((resolve) => {
+      // Create modal overlay
+      const overlay = document.createElement('div');
+      overlay.className = 'fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4';
+      overlay.onclick = (e) => {
+        if (e.target === overlay) {
+          overlay.remove();
+          resolve(null);
+        }
+      };
+
+      // Create modal
+      const modal = document.createElement('div');
+      modal.className = 'bg-surface-glass backdrop-blur-lg rounded-xl border border-white/10 p-6 max-w-md w-full';
+      modal.innerHTML = `
+        <h3 class="text-xl font-bold font-mono text-white mb-4">Select Wallet</h3>
+        <div class="space-y-2" id="wallet-list"></div>
+      `;
+
+      const walletList = modal.querySelector('#wallet-list');
+
+      wallets.forEach(wallet => {
+        const button = document.createElement('button');
+        button.className = 'w-full p-4 rounded-lg bg-black/50 border border-white/10 hover:border-primary/50 transition-colors flex items-center gap-3 group';
+        button.innerHTML = `
+          <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
+            <span class="text-primary font-bold text-lg">${wallet.name[0]}</span>
+          </div>
+          <div class="flex-1 text-left">
+            <p class="text-white font-mono font-bold">${wallet.name}</p>
+            <p class="text-gray-400 text-xs">Click to connect</p>
+          </div>
+          <span class="material-symbols-outlined text-gray-500 group-hover:text-primary transition-colors">arrow_forward</span>
+        `;
+        button.onclick = () => {
+          overlay.remove();
+          resolve(wallet);
+        };
+        walletList.appendChild(button);
+      });
+
+      overlay.appendChild(modal);
+      document.body.appendChild(overlay);
+    });
+  }
+
+  // Auto-connect to preferred wallet if available
+  async autoConnect() {
+    const preferredWallet = localStorage.getItem('preferredWallet');
+    if (!preferredWallet) return false;
+
+    const wallets = this.getSuiWallets();
+    const wallet = wallets.find(w => w.name === preferredWallet);
+
+    if (wallet) {
+      try {
+        await this.connect(wallet);
+        return true;
+      } catch (err) {
+        console.log('Auto-connect failed:', err);
+        localStorage.removeItem('preferredWallet');
+        return false;
+      }
+    }
+    return false;
   }
 
   async disconnect() {
@@ -62,6 +140,10 @@ class WalletManager {
     this.account = null;
     this.connected = false;
     this.balance = 0;
+
+    // Clear preferred wallet from localStorage
+    localStorage.removeItem('preferredWallet');
+
     this.emit('disconnected');
   }
 
@@ -335,10 +417,23 @@ function escapeHtml(text) {
 }
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   initElements();
 
   let isConnecting = false; // Debounce flag
+
+  // Try auto-connect to preferred wallet
+  try {
+    isConnecting = true;
+    const autoConnected = await walletManager.autoConnect();
+    if (autoConnected) {
+      console.log('Auto-connected to preferred wallet');
+    }
+  } catch (err) {
+    console.log('Auto-connect skipped:', err);
+  } finally {
+    isConnecting = false;
+  }
 
   // Wallet connection events
   elements.connectBtn?.addEventListener('click', async () => {
