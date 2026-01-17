@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Documentation - Walrus Starter Kit</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;700;800&family=VT323&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#06b6d4",
+                        "primary-dark": "#0891b2",
+                        "secondary": "#a855f7",
+                        "lavender": "#d8b4fe",
+                        "lavender-dark": "#c084fc",
+                        "background-dark": "#020617",
+                        "surface": "#0f172a",
+                        "surface-glass": "rgba(15, 23, 42, 0.6)",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"],
+                        "pixel": ["VT323", "monospace"],
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        .glass-card {
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.3);
+            box-shadow: 0 0 30px -10px rgba(6, 182, 212, 0.2);
+        }
+        .code-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .code-scroll::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        .code-scroll::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        .code-scroll::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .sidebar-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar-scroll::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 3px;
+        }
+        .nav-active {
+            color: #06b6d4;
+            border-left: 2px solid #06b6d4;
+            background: rgba(6, 182, 212, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-background-dark text-gray-200 font-body overflow-x-hidden selection:bg-primary selection:text-black">
+    <!-- Top Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/5 bg-background-dark/80">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="relative w-8 h-8 flex items-center justify-center">
+                    <img alt="Walrus SK Logo" class="w-full h-full object-contain"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmH_7ZYDgSQ0FKdd0XFsOy8dfLlRMFJ2mAa8jQfhI7ctjPWk4s3APhiDFXuuZltdsZYMoX2ofYyTAdIj7TJ6OcZJuK165IpYhcoT5asuIWzTf6w6STL7MPG9lTEA-Bh2bTkKWUlSjjJCetahXN5v2JU0fhkAxsKq5lGNi6TNDpVKMEaWzdunblXLQsQtyKVmvcxk8BjTeSldnZSOuU67E4fz40CrDHJBjUmXPMrPh_HHekk4fWjk75ilLI_sAZyshGR4hxlPO8ces" />
+                </div>
+                <span class="font-mono font-bold text-lg tracking-tight text-white">Walrus<span
+                        class="text-primary">SK</span></span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 font-mono text-sm">
+                <a class="text-primary hover:text-white transition-colors" href="docs.html">Docs</a>
+                <a class="text-gray-400 hover:text-white transition-colors" href="dashboard.html">Builder</a>
+                <a class="text-gray-400 hover:text-white transition-colors" href="index.html">Home</a>
+                <div class="h-4 w-px bg-white/10"></div>
+                <a class="text-gray-400 hover:text-white transition-colors flex items-center gap-2" href="#">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path clip-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.943 0-1.091.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.597 1.028 2.688 0 3.848-2.339 4.685-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                            fill-rule="evenodd"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Layout with Sidebar -->
+    <div class="flex pt-16">
+        <!-- Sidebar Navigation -->
+        <aside class="hidden lg:block fixed left-0 top-16 bottom-0 w-64 border-r border-white/5 bg-surface/50 overflow-y-auto sidebar-scroll">
+            <nav class="p-6 space-y-8">
+                <!-- Getting Started -->
+                <div>
+                    <h3 class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">Getting Started</h3>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#installation" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Installation</a></li>
+                        <li><a href="#quick-start" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Quick Start</a></li>
+                        <li><a href="#project-structure" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Project Structure</a></li>
+                    </ul>
+                </div>
+
+                <!-- CLI Reference -->
+                <div>
+                    <h3 class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">CLI Reference</h3>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#cli-commands" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Commands</a></li>
+                        <li><a href="#cli-options" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Options</a></li>
+                        <li><a href="#cli-examples" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Examples</a></li>
+                    </ul>
+                </div>
+
+                <!-- Architecture -->
+                <div>
+                    <h3 class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">Architecture</h3>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#layer-system" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Layer System</a></li>
+                        <li><a href="#adapter-pattern" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Adapter Pattern</a></li>
+                        <li><a href="#sdk-integration" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">SDK Integration</a></li>
+                    </ul>
+                </div>
+
+                <!-- Guides -->
+                <div>
+                    <h3 class="text-xs font-mono text-gray-500 uppercase tracking-wider mb-3">Guides</h3>
+                    <ul class="space-y-1 text-sm">
+                        <li><a href="#custom-templates" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Custom Templates</a></li>
+                        <li><a href="#deployment" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Deployment</a></li>
+                        <li><a href="#troubleshooting" class="block px-3 py-2 rounded text-gray-300 hover:text-white hover:bg-white/5 transition-colors">Troubleshooting</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 lg:ml-64">
+            <div class="max-w-4xl mx-auto px-6 py-12 space-y-16">
+                <!-- Hero Section -->
+                <section>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">Documentation</h1>
+                    <p class="text-lg text-gray-400 font-mono">Everything you need to build production-ready Walrus dApps with our CLI scaffolder.</p>
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <a href="#quick-start" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-black font-mono font-bold rounded hover:scale-105 transition-transform">
+                            Quick Start
+                            <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                        </a>
+                        <a href="dashboard.html" class="inline-flex items-center gap-2 px-6 py-3 border border-white/20 text-white font-mono rounded hover:bg-white/5 transition-colors">
+                            Try Interactive Builder
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Installation -->
+                <section id="installation" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">download</span>
+                        Installation
+                    </h2>
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h3 class="text-lg font-bold text-white mb-3 font-mono">Prerequisites</h3>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span>Node.js 18.0 or higher</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span>npm, pnpm, yarn, or bun package manager</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-primary mt-1">•</span>
+                                <span>Git (for version control)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                        <div class="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-white/[0.02]">
+                            <span class="text-xs font-mono text-gray-500">Terminal</span>
+                            <button class="text-xs font-mono text-gray-400 hover:text-white" onclick="navigator.clipboard.writeText('npm create walrus-app@latest')">
+                                <span class="material-symbols-outlined text-[14px]">content_copy</span>
+                            </button>
+                        </div>
+                        <div class="p-6 font-mono text-sm">
+                            <span class="text-primary">$</span> <span class="text-gray-200">npm create walrus-app@latest</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Start -->
+                <section id="quick-start" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">rocket_launch</span>
+                        Quick Start
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 shrink-0 mt-1">
+                                    <span class="text-primary font-mono font-bold text-sm">1</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-white font-mono font-bold mb-2">Create Your Project</h3>
+                                    <p class="text-gray-400 text-sm mb-4">Run the create command with your project name:</p>
+                                    <div class="bg-black/50 rounded p-3 font-mono text-sm text-gray-300">
+                                        <span class="text-primary">$</span> npm create walrus-app@latest my-walrus-app
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center border border-secondary/20 shrink-0 mt-1">
+                                    <span class="text-secondary font-mono font-bold text-sm">2</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-white font-mono font-bold mb-2">Answer Interactive Prompts</h3>
+                                    <p class="text-gray-400 text-sm mb-4">The CLI will guide you through setup:</p>
+                                    <div class="bg-black/50 rounded p-3 font-mono text-xs text-gray-300 space-y-1">
+                                        <div><span class="text-secondary">?</span> Select SDK: <span class="text-primary">@mysten/walrus</span></div>
+                                        <div><span class="text-secondary">?</span> Select framework: <span class="text-primary">React + Vite</span></div>
+                                        <div><span class="text-secondary">?</span> Select use case: <span class="text-primary">File Gallery</span></div>
+                                        <div><span class="text-secondary">?</span> Package manager: <span class="text-primary">npm</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="flex items-start gap-4">
+                                <div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20 shrink-0 mt-1">
+                                    <span class="text-white font-mono font-bold text-sm">3</span>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-white font-mono font-bold mb-2">Start Development</h3>
+                                    <p class="text-gray-400 text-sm mb-4">Navigate to your project and start the dev server:</p>
+                                    <div class="bg-black/50 rounded p-3 font-mono text-sm text-gray-300 space-y-1">
+                                        <div><span class="text-primary">$</span> cd my-walrus-app</div>
+                                        <div><span class="text-primary">$</span> npm run dev</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project Structure -->
+                <section id="project-structure" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">folder_open</span>
+                        Project Structure
+                    </h2>
+                    <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                        <div class="p-6 font-mono text-sm">
+                            <pre class="text-gray-300"><span class="text-secondary">my-walrus-app/</span>
+├── <span class="text-primary">src/</span>
+│   ├── <span class="text-white">adapters/</span>          # SDK adapter implementations
+│   ├── <span class="text-white">components/</span>        # UI components
+│   ├── <span class="text-white">hooks/</span>             # Custom React hooks
+│   ├── <span class="text-white">types/</span>             # TypeScript type definitions
+│   ├── <span class="text-white">App.tsx</span>            # Main application component
+│   └── <span class="text-white">main.tsx</span>           # Application entry point
+├── <span class="text-lavender">public/</span>             # Static assets
+├── <span class="text-gray-500">package.json</span>        # Project dependencies
+├── <span class="text-gray-500">tsconfig.json</span>       # TypeScript configuration
+├── <span class="text-gray-500">vite.config.ts</span>      # Vite bundler config
+└── <span class="text-gray-500">README.md</span>           # Project documentation</pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CLI Commands -->
+                <section id="cli-commands" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">terminal</span>
+                        CLI Commands
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="glass-card rounded-xl p-6">
+                            <h3 class="text-white font-mono font-bold mb-2">create walrus-app</h3>
+                            <p class="text-gray-400 text-sm mb-4">Interactive scaffolder for new Walrus projects.</p>
+                            <div class="bg-black/50 rounded p-3 font-mono text-sm text-gray-300">
+                                npm create walrus-app@latest [project-name] [options]
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CLI Options -->
+                <section id="cli-options" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">tune</span>
+                        CLI Options
+                    </h2>
+                    <div class="overflow-hidden rounded-lg border border-white/10">
+                        <table class="w-full text-left text-sm font-mono">
+                            <thead class="bg-white/5 text-gray-400">
+                                <tr>
+                                    <th class="px-6 py-4 font-medium">Option</th>
+                                    <th class="px-6 py-4 font-medium">Description</th>
+                                    <th class="px-6 py-4 font-medium">Values</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white/5 bg-black/20">
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-6 py-4 text-primary">--sdk</td>
+                                    <td class="px-6 py-4 text-gray-300">SDK to use</td>
+                                    <td class="px-6 py-4 text-gray-400">mysten | tusky | hibernuts</td>
+                                </tr>
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-6 py-4 text-primary">--framework</td>
+                                    <td class="px-6 py-4 text-gray-300">Frontend framework</td>
+                                    <td class="px-6 py-4 text-gray-400">react | vue | plain-ts</td>
+                                </tr>
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-6 py-4 text-primary">--use-case</td>
+                                    <td class="px-6 py-4 text-gray-300">Application template</td>
+                                    <td class="px-6 py-4 text-gray-400">simple-upload | gallery | defi-nft</td>
+                                </tr>
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-6 py-4 text-primary">-p, --package-manager</td>
+                                    <td class="px-6 py-4 text-gray-300">Package manager</td>
+                                    <td class="px-6 py-4 text-gray-400">npm | pnpm | yarn | bun</td>
+                                </tr>
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-6 py-4 text-primary">--skip-install</td>
+                                    <td class="px-6 py-4 text-gray-300">Skip dependency installation</td>
+                                    <td class="px-6 py-4 text-gray-400">-</td>
+                                </tr>
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-6 py-4 text-primary">--skip-git</td>
+                                    <td class="px-6 py-4 text-gray-300">Skip git initialization</td>
+                                    <td class="px-6 py-4 text-gray-400">-</td>
+                                </tr>
+                                <tr class="hover:bg-white/5">
+                                    <td class="px-6 py-4 text-primary">--skip-validation</td>
+                                    <td class="px-6 py-4 text-gray-300">Skip project validation</td>
+                                    <td class="px-6 py-4 text-gray-400">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- CLI Examples -->
+                <section id="cli-examples" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">code</span>
+                        CLI Examples
+                    </h2>
+                    <div class="space-y-4">
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                                <span class="text-xs font-mono text-gray-500">Interactive mode (recommended)</span>
+                            </div>
+                            <div class="p-6 font-mono text-sm text-gray-300">
+                                <span class="text-primary">$</span> npm create walrus-app@latest
+                            </div>
+                        </div>
+
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                                <span class="text-xs font-mono text-gray-500">Specify project name</span>
+                            </div>
+                            <div class="p-6 font-mono text-sm text-gray-300">
+                                <span class="text-primary">$</span> npm create walrus-app@latest my-project
+                            </div>
+                        </div>
+
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                                <span class="text-xs font-mono text-gray-500">Non-interactive with all options</span>
+                            </div>
+                            <div class="p-6 font-mono text-sm text-gray-300">
+                                <span class="text-primary">$</span> npm create walrus-app@latest my-gallery \<br/>
+                                &nbsp;&nbsp;--sdk mysten \<br/>
+                                &nbsp;&nbsp;--framework react \<br/>
+                                &nbsp;&nbsp;--use-case gallery \<br/>
+                                &nbsp;&nbsp;--package-manager pnpm
+                            </div>
+                        </div>
+
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02] flex items-center justify-between">
+                                <span class="text-xs font-mono text-gray-500">Skip automated setup</span>
+                            </div>
+                            <div class="p-6 font-mono text-sm text-gray-300">
+                                <span class="text-primary">$</span> npm create walrus-app@latest my-project \<br/>
+                                &nbsp;&nbsp;--skip-install \<br/>
+                                &nbsp;&nbsp;--skip-git
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Layer System -->
+                <section id="layer-system" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">layers</span>
+                        Layer System
+                    </h2>
+                    <p class="text-gray-400 mb-6">Walrus Starter Kit uses a modular 4-layer architecture designed for scalability and flexibility:</p>
+                    <div class="space-y-3">
+                        <div class="glass-card rounded-xl p-6 border-l-4 border-l-primary">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-white font-bold font-mono">Layer 04: Use Case</h3>
+                                <span class="text-xs font-mono text-gray-500 bg-white/5 px-2 py-1 rounded">APPLICATION</span>
+                            </div>
+                            <p class="text-gray-400 text-sm">Pre-built templates: Simple Upload, File Gallery, DeFi/NFT integrations</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 border-l-4 border-l-secondary">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-white font-bold font-mono">Layer 03: Framework</h3>
+                                <span class="text-xs font-mono text-gray-500 bg-white/5 px-2 py-1 rounded">UI LAYER</span>
+                            </div>
+                            <p class="text-gray-400 text-sm">React, Vue, or Plain TypeScript with Vite for blazing-fast HMR</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 border-l-4 border-l-white">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-white font-bold font-mono">Layer 02: SDK Adapters</h3>
+                                <span class="text-xs font-mono text-gray-500 bg-white/5 px-2 py-1 rounded">ABSTRACTION</span>
+                            </div>
+                            <p class="text-gray-400 text-sm">Type-safe interfaces that abstract SDK-specific implementations</p>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 border-l-4 border-l-gray-500">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-white font-bold font-mono">Layer 01: Base</h3>
+                                <span class="text-xs font-mono text-gray-500 bg-white/5 px-2 py-1 rounded">FOUNDATION</span>
+                            </div>
+                            <p class="text-gray-400 text-sm">Walrus Network and Sui blockchain infrastructure</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Adapter Pattern -->
+                <section id="adapter-pattern" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">extension</span>
+                        Adapter Pattern
+                    </h2>
+                    <p class="text-gray-400 mb-6">The adapter pattern allows you to switch between SDKs without changing your application code:</p>
+                    <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden mb-6">
+                        <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02]">
+                            <span class="text-xs font-mono text-gray-500">src/adapters/StorageAdapter.ts</span>
+                        </div>
+                        <div class="p-6 overflow-x-auto code-scroll">
+                            <pre class="font-mono text-sm leading-relaxed"><code class="language-typescript"><span class="text-secondary">export interface</span> <span class="text-yellow-200">StorageAdapter</span> {
+  <span class="text-gray-500">// Upload a file and get a blob ID</span>
+  <span class="text-lavender">upload</span>(file: <span class="text-primary">File</span>, options?: <span class="text-primary">UploadOptions</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">string</span>&gt;;
+
+  <span class="text-gray-500">// Retrieve file metadata</span>
+  <span class="text-lavender">getInfo</span>(id: <span class="text-primary">string</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">BlobMetadata</span>&gt;;
+
+  <span class="text-gray-500">// Download blob content</span>
+  <span class="text-lavender">download</span>(id: <span class="text-primary">string</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">Blob</span>&gt;;
+
+  <span class="text-gray-500">// Remove from local tracking</span>
+  <span class="text-lavender">delete</span>(id: <span class="text-primary">string</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">void</span>&gt;;
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-xl p-6">
+                        <h3 class="text-white font-mono font-bold mb-3">Benefits</h3>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 material-symbols-outlined text-sm mt-0.5">check_circle</span>
+                                <span><strong class="text-white">SDK-agnostic:</strong> Switch between @mysten/walrus, @tusky, or custom implementations</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 material-symbols-outlined text-sm mt-0.5">check_circle</span>
+                                <span><strong class="text-white">Type-safe:</strong> Full TypeScript support with compile-time guarantees</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 material-symbols-outlined text-sm mt-0.5">check_circle</span>
+                                <span><strong class="text-white">Testable:</strong> Easy to mock for unit tests and local development</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- SDK Integration -->
+                <section id="sdk-integration" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">integration_instructions</span>
+                        SDK Integration
+                    </h2>
+                    <p class="text-gray-400 mb-6">Currently supporting @mysten/walrus with planned support for additional SDKs:</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="glass-card rounded-xl p-6">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded bg-primary/10 flex items-center justify-center border border-primary/20">
+                                    <span class="material-symbols-outlined text-primary">check</span>
+                                </div>
+                                <h3 class="text-white font-bold font-mono">@mysten/walrus</h3>
+                            </div>
+                            <p class="text-gray-400 text-sm">Official Mysten Labs SDK with full testnet/mainnet support</p>
+                            <div class="mt-4">
+                                <span class="text-xs font-mono bg-green-500/10 text-green-400 px-2 py-1 rounded border border-green-500/20">STABLE</span>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 opacity-60">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded bg-gray-500/10 flex items-center justify-center border border-gray-500/20">
+                                    <span class="material-symbols-outlined text-gray-500">schedule</span>
+                                </div>
+                                <h3 class="text-gray-400 font-bold font-mono">@tusky</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm">Community SDK with enhanced features</p>
+                            <div class="mt-4">
+                                <span class="text-xs font-mono bg-yellow-500/10 text-yellow-400 px-2 py-1 rounded border border-yellow-500/20">PLANNED</span>
+                            </div>
+                        </div>
+                        <div class="glass-card rounded-xl p-6 opacity-60">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="w-10 h-10 rounded bg-gray-500/10 flex items-center justify-center border border-gray-500/20">
+                                    <span class="material-symbols-outlined text-gray-500">schedule</span>
+                                </div>
+                                <h3 class="text-gray-400 font-bold font-mono">@hibernuts</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm">Alternative implementation</p>
+                            <div class="mt-4">
+                                <span class="text-xs font-mono bg-yellow-500/10 text-yellow-400 px-2 py-1 rounded border border-yellow-500/20">PLANNED</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Custom Templates -->
+                <section id="custom-templates" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">palette</span>
+                        Custom Templates
+                    </h2>
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <p class="text-gray-400 mb-4">You can extend the starter kit with your own custom templates by creating a layer-based template structure:</p>
+                        <div class="bg-black/50 rounded p-4 font-mono text-sm">
+                            <pre class="text-gray-300"><span class="text-secondary">templates/</span>
+└── <span class="text-primary">use-cases/</span>
+    └── <span class="text-white">my-custom-template/</span>
+        ├── <span class="text-lavender">src/</span>           # Source code
+        ├── <span class="text-gray-500">package.json</span>  # Dependencies
+        └── <span class="text-gray-500">README.md</span>     # Documentation</pre>
+                        </div>
+                    </div>
+                    <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
+                        <div class="flex items-start gap-3">
+                            <span class="material-symbols-outlined text-yellow-500 mt-0.5">info</span>
+                            <div>
+                                <h4 class="text-yellow-400 font-bold mb-1 font-mono text-sm">Template Development Guide</h4>
+                                <p class="text-yellow-200/80 text-sm">Full guide for creating custom templates coming soon. Join our Discord for early access.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Deployment -->
+                <section id="deployment" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">cloud_upload</span>
+                        Deployment
+                    </h2>
+                    <div class="space-y-6">
+                        <div class="glass-card rounded-xl p-6">
+                            <h3 class="text-white font-mono font-bold mb-3">Build for Production</h3>
+                            <div class="bg-black/50 rounded p-3 font-mono text-sm text-gray-300 mb-4">
+                                <span class="text-primary">$</span> npm run build
+                            </div>
+                            <p class="text-gray-400 text-sm">This creates an optimized production build in the <code class="bg-white/5 px-2 py-1 rounded font-mono text-primary">dist/</code> directory.</p>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-6">
+                            <h3 class="text-white font-mono font-bold mb-3">Deployment Targets</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-black/30 rounded p-4 border border-white/5">
+                                    <h4 class="text-primary font-mono font-bold text-sm mb-2">Vercel</h4>
+                                    <p class="text-gray-400 text-xs">Zero-config deployment with automatic CI/CD</p>
+                                </div>
+                                <div class="bg-black/30 rounded p-4 border border-white/5">
+                                    <h4 class="text-primary font-mono font-bold text-sm mb-2">Netlify</h4>
+                                    <p class="text-gray-400 text-xs">Drag-and-drop or Git-based deployments</p>
+                                </div>
+                                <div class="bg-black/30 rounded p-4 border border-white/5">
+                                    <h4 class="text-primary font-mono font-bold text-sm mb-2">Cloudflare Pages</h4>
+                                    <p class="text-gray-400 text-xs">Edge deployment with global CDN</p>
+                                </div>
+                                <div class="bg-black/30 rounded p-4 border border-white/5">
+                                    <h4 class="text-primary font-mono font-bold text-sm mb-2">GitHub Pages</h4>
+                                    <p class="text-gray-400 text-xs">Free hosting for static sites</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Troubleshooting -->
+                <section id="troubleshooting" class="scroll-mt-20">
+                    <h2 class="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary">help</span>
+                        Troubleshooting
+                    </h2>
+                    <div class="space-y-4">
+                        <details class="glass-card rounded-xl overflow-hidden group">
+                            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-white/5 transition-colors">
+                                <span class="text-white font-mono font-bold">Installation fails with permission errors</span>
+                                <span class="material-symbols-outlined text-gray-500 group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-6 pb-6 border-t border-white/5 pt-4">
+                                <p class="text-gray-400 text-sm mb-3">Try running with sudo (Linux/Mac) or as Administrator (Windows), or use nvm/fnm to manage Node.js without requiring elevated permissions.</p>
+                                <div class="bg-black/50 rounded p-3 font-mono text-sm text-gray-300">
+                                    <span class="text-primary">$</span> sudo npm create walrus-app@latest
+                                </div>
+                            </div>
+                        </details>
+
+                        <details class="glass-card rounded-xl overflow-hidden group">
+                            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-white/5 transition-colors">
+                                <span class="text-white font-mono font-bold">Port 5173 is already in use</span>
+                                <span class="material-symbols-outlined text-gray-500 group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-6 pb-6 border-t border-white/5 pt-4">
+                                <p class="text-gray-400 text-sm mb-3">Vite will automatically try the next available port. You can also specify a custom port:</p>
+                                <div class="bg-black/50 rounded p-3 font-mono text-sm text-gray-300">
+                                    <span class="text-primary">$</span> npm run dev -- --port 3000
+                                </div>
+                            </div>
+                        </details>
+
+                        <details class="glass-card rounded-xl overflow-hidden group">
+                            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-white/5 transition-colors">
+                                <span class="text-white font-mono font-bold">TypeScript errors after installation</span>
+                                <span class="material-symbols-outlined text-gray-500 group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-6 pb-6 border-t border-white/5 pt-4">
+                                <p class="text-gray-400 text-sm mb-3">Make sure all dependencies are installed correctly:</p>
+                                <div class="bg-black/50 rounded p-3 font-mono text-sm text-gray-300 space-y-1">
+                                    <div><span class="text-primary">$</span> rm -rf node_modules package-lock.json</div>
+                                    <div><span class="text-primary">$</span> npm install</div>
+                                </div>
+                            </div>
+                        </details>
+
+                        <details class="glass-card rounded-xl overflow-hidden group">
+                            <summary class="p-6 cursor-pointer flex items-center justify-between hover:bg-white/5 transition-colors">
+                                <span class="text-white font-mono font-bold">Walrus SDK connection errors</span>
+                                <span class="material-symbols-outlined text-gray-500 group-open:rotate-180 transition-transform">expand_more</span>
+                            </summary>
+                            <div class="px-6 pb-6 border-t border-white/5 pt-4">
+                                <p class="text-gray-400 text-sm mb-3">Check your network configuration and ensure you're using the correct Walrus network (testnet/mainnet). Verify your aggregator/publisher endpoints in the config.</p>
+                            </div>
+                        </details>
+                    </div>
+                </section>
+
+                <!-- Support Section -->
+                <section class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-8 border border-primary/20">
+                    <div class="text-center">
+                        <h2 class="text-2xl font-bold text-white mb-3 font-mono">Need Help?</h2>
+                        <p class="text-gray-300 mb-6">Join our community or report issues on GitHub</p>
+                        <div class="flex flex-wrap justify-center gap-4">
+                            <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white font-mono rounded hover:bg-white/20 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+                                </svg>
+                                Discord
+                            </a>
+                            <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-white/10 border border-white/20 text-white font-mono rounded hover:bg-white/20 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.943 0-1.091.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.597 1.028 2.688 0 3.848-2.339 4.685-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                                </svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Footer -->
+            <footer class="mt-20 border-t border-white/10 bg-black/40">
+                <div class="max-w-4xl mx-auto px-6 py-8">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500 font-mono">
+                        <div>© 2024 Walrus Starter Kit. MIT License.</div>
+                        <div class="flex gap-6">
+                            <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+                            <a href="dashboard.html" class="hover:text-primary transition-colors">Builder</a>
+                            <a href="#" class="hover:text-primary transition-colors">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Highlight active section in sidebar
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('aside a[href^="#"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('nav-active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('nav-active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
