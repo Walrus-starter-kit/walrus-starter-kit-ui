@@ -14,6 +14,27 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'dark',
+            themeVariables: {
+                primaryColor: '#06b6d4',
+                primaryTextColor: '#000',
+                primaryBorderColor: '#0891b2',
+                lineColor: '#64748b',
+                secondaryColor: '#a855f7',
+                tertiaryColor: '#d8b4fe',
+                background: '#0f172a',
+                mainBkg: '#0f172a',
+                secondBkg: '#1e293b',
+                textColor: '#e2e8f0',
+                fontSize: '14px',
+                fontFamily: 'JetBrains Mono, monospace'
+            }
+        });
+    </script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -87,9 +108,9 @@
     <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-white/5 bg-background-dark/80">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="relative w-8 h-8 flex items-center justify-center">
+                <div class="relative w-24 h-24 flex items-center justify-center">
                     <img alt="Walrus SK Logo" class="w-full h-full object-contain"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmH_7ZYDgSQ0FKdd0XFsOy8dfLlRMFJ2mAa8jQfhI7ctjPWk4s3APhiDFXuuZltdsZYMoX2ofYyTAdIj7TJ6OcZJuK165IpYhcoT5asuIWzTf6w6STL7MPG9lTEA-Bh2bTkKWUlSjjJCetahXN5v2JU0fhkAxsKq5lGNi6TNDpVKMEaWzdunblXLQsQtyKVmvcxk8BjTeSldnZSOuU67E4fz40CrDHJBjUmXPMrPh_HHekk4fWjk75ilLI_sAZyshGR4hxlPO8ces" />
+                        src="walrus-logo.png" />
                 </div>
                 <span class="font-mono font-bold text-lg tracking-tight text-white">Walrus<span
                         class="text-primary">SK</span></span>
@@ -396,22 +417,42 @@
 
                     <div class="glass-card rounded-xl p-8 mb-6">
                         <h3 class="text-white font-mono font-bold mb-4 flex items-center gap-2">
-                            <span class="material-symbols-outlined text-primary">folder_open</span>
-                            Monorepo Structure
+                            <span class="material-symbols-outlined text-primary">account_tree</span>
+                            Monorepo Structure Diagram
                         </h3>
                         <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
-                            <div class="p-6 font-mono text-sm overflow-x-auto code-scroll">
-                                <pre class="text-gray-300"><span class="text-secondary">walrus-starter-kit/</span>
-├── <span class="text-primary">packages/cli/</span>               # Scaffolder Engine
-│   ├── <span class="text-white">src/</span>                     # CLI source code
-│   ├── <span class="text-lavender">presets/</span>                 # Pre-built templates
-│   │   ├── <span class="text-green-400">react-mysten-simple-upload/</span>
-│   │   ├── <span class="text-green-400">react-mysten-gallery/</span>
-│   │   └── <span class="text-yellow-400">react-mysten-simple-upload-enoki/</span>
-│   └── <span class="text-white">scripts/</span>                 # Template validation
-├── <span class="text-gray-500">templates/</span>                   # Reference layers (legacy)
-├── <span class="text-white">docs/</span>                        # Technical documentation
-└── <span class="text-white">examples/</span>                    # Generated test outputs</pre>
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+graph TD
+    Root[walrus-starter-kit/]
+    Root --> CLI[packages/cli/]
+    Root --> Templates[templates/]
+    Root --> Docs[docs/]
+    Root --> Examples[examples/]
+
+    CLI --> Src[src/]
+    CLI --> Presets[presets/]
+    CLI --> Scripts[scripts/]
+
+    Presets --> P1[react-mysten-simple-upload/]
+    Presets --> P2[react-mysten-gallery/]
+    Presets --> P3[react-mysten-simple-upload-enoki/]
+
+    Templates -.-> Base[base/]
+    Templates -.-> SDK[sdk-mysten/]
+    Templates -.-> Enoki[enoki/]
+    Templates -.-> React[react/]
+    Templates -.-> Upload[simple-upload/]
+    Templates -.-> Gallery[gallery/]
+
+    style Root fill:#0891b2,stroke:#06b6d4,color:#fff
+    style CLI fill:#a855f7,stroke:#c084fc,color:#fff
+    style Presets fill:#d8b4fe,stroke:#c084fc,color:#000
+    style P1 fill:#22c55e,stroke:#4ade80,color:#000
+    style P2 fill:#22c55e,stroke:#4ade80,color:#000
+    style P3 fill:#eab308,stroke:#facc15,color:#000
+    style Templates fill:#64748b,stroke:#94a3b8,color:#fff,stroke-dasharray: 5 5
+                                </pre>
                             </div>
                         </div>
                         <div class="mt-4 bg-yellow-500/10 border border-yellow-500/20 rounded p-3 text-sm">
@@ -479,65 +520,38 @@
                     <p class="text-gray-400 mb-6">Streamlined preset-based scaffolding flow:</p>
 
                     <div class="glass-card rounded-xl p-6 mb-6">
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center">
-                                    <span class="text-primary font-mono font-bold text-sm">1</span>
-                                </div>
-                                <div class="flex-1 bg-black/30 rounded p-3">
-                                    <div class="font-mono text-sm text-white">Entry Point</div>
-                                    <div class="text-xs text-gray-400 mt-1">index.ts → Commander setup</div>
-                                </div>
-                            </div>
-                            <div class="ml-5 border-l-2 border-primary/20 h-6"></div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-secondary/10 border border-secondary/20 flex items-center justify-center">
-                                    <span class="text-secondary font-mono font-bold text-sm">2</span>
-                                </div>
-                                <div class="flex-1 bg-black/30 rounded p-3">
-                                    <div class="font-mono text-sm text-white">Parse Arguments</div>
-                                    <div class="text-xs text-gray-400 mt-1">CLI flags or interactive prompts</div>
-                                </div>
-                            </div>
-                            <div class="ml-5 border-l-2 border-secondary/20 h-6"></div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-lavender/10 border border-lavender/20 flex items-center justify-center">
-                                    <span class="text-lavender font-mono font-bold text-sm">3</span>
-                                </div>
-                                <div class="flex-1 bg-black/30 rounded p-3">
-                                    <div class="font-mono text-sm text-white">Build Context</div>
-                                    <div class="text-xs text-gray-400 mt-1">Merge args + prompts with validation</div>
-                                </div>
-                            </div>
-                            <div class="ml-5 border-l-2 border-lavender/20 h-6"></div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center">
-                                    <span class="text-white font-mono font-bold text-sm">4</span>
-                                </div>
-                                <div class="flex-1 bg-black/30 rounded p-3">
-                                    <div class="font-mono text-sm text-white">Validate Compatibility</div>
-                                    <div class="text-xs text-gray-400 mt-1">matrix.ts → Ensure valid preset exists</div>
-                                </div>
-                            </div>
-                            <div class="ml-5 border-l-2 border-white/20 h-6"></div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-                                    <span class="text-green-400 font-mono font-bold text-sm">5</span>
-                                </div>
-                                <div class="flex-1 bg-black/30 rounded p-3">
-                                    <div class="font-mono text-sm text-white">Generate Project</div>
-                                    <div class="text-xs text-gray-400 mt-1">Copy preset + transform + .env setup</div>
-                                </div>
-                            </div>
-                            <div class="ml-5 border-l-2 border-green-500/20 h-6"></div>
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-full bg-green-500/20 border border-green-500/30 flex items-center justify-center">
-                                    <span class="text-green-300 font-mono font-bold text-sm">6</span>
-                                </div>
-                                <div class="flex-1 bg-black/30 rounded p-3">
-                                    <div class="font-mono text-sm text-white">Post-Install & Verification</div>
-                                    <div class="text-xs text-gray-400 mt-1">PM install → TypeScript validation</div>
-                                </div>
+                        <h3 class="text-white font-mono font-bold mb-4">Pipeline Flow Diagram</h3>
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+flowchart TD
+    Start([User runs create-walrus-app]) --> Entry[Entry Point index.ts]
+    Entry --> Parse[Parse Arguments commander]
+    Parse --> Check{CLI flags provided?}
+    Check -->|No| Prompts[Interactive Prompts prompts.ts]
+    Check -->|Yes| Context
+    Prompts --> Context[Build Context context.ts]
+    Context --> Validate[Validate Compatibility matrix.ts]
+    Validate --> Valid{Valid preset exists?}
+    Valid -->|No| Error1[Error: Invalid combination]
+    Valid -->|Yes| Generate[Generate Project generator]
+    Generate --> Copy[Copy Preset Directory]
+    Copy --> Transform[Transform Variables]
+    Transform --> Env[Auto-copy env example]
+    Env --> Install{Skip install flag?}
+    Install -->|No| PM[Install Dependencies package-manager.ts]
+    Install -->|Yes| Skip1[Skip to validation]
+    PM --> Verify{Skip validation flag?}
+    Skip1 --> Verify
+    Verify -->|No| TSCheck[TypeScript Validation validator.ts]
+    Verify -->|Yes| Success
+    TSCheck --> TSValid{TS compiles?}
+    TSValid -->|No| Error2[Show errors and recovery steps]
+    TSValid -->|Yes| Success[Success Message Next steps UI]
+    Success --> End([Project Ready])
+    Error1 --> End
+    Error2 --> End
+                                </pre>
                             </div>
                         </div>
                     </div>
@@ -594,20 +608,35 @@
                     <p class="text-gray-400 mb-6">Modern React 18 with Vite, TanStack Query, and Sui wallet integration:</p>
 
                     <div class="glass-card rounded-xl p-6 mb-6">
-                        <h3 class="text-white font-mono font-bold mb-4">Provider Composition Pattern</h3>
+                        <h3 class="text-white font-mono font-bold mb-4">Provider Composition Hierarchy</h3>
                         <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
-                            <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02]">
-                                <span class="text-xs font-mono text-gray-500">main.tsx</span>
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+graph TB
+    App[App Component]
+    QueryP[QueryProvider TanStack Query]
+    WalletP[WalletProvider dapp-kit]
+    EnokiP[EnokiProvider zkLogin Beta]
+    QueryClient[QueryClient Instance]
+    Network[Sui Network Config]
+    Session[SessionStorage Adapter]
+
+    QueryP --> App
+    WalletP --> QueryP
+    EnokiP --> WalletP
+
+    QueryClient -.-> QueryP
+    Network -.-> WalletP
+    Session -.-> EnokiP
+
+    QueryP -->|Provides| State[Async State Management]
+    WalletP -->|Provides| Wallet[Wallet Connection Account Management]
+    EnokiP -->|Provides| Auth[zkLogin Authentication Google OAuth]
+                                </pre>
                             </div>
-                            <div class="p-6 overflow-x-auto code-scroll">
-                                <pre class="font-mono text-sm leading-relaxed"><code class="language-tsx"><span class="text-secondary">&lt;QueryProvider&gt;</span>          <span class="text-gray-500">// TanStack Query (async state)</span>
-  <span class="text-lavender">&lt;WalletProvider&gt;</span>       <span class="text-gray-500">// Sui wallet + network config</span>
-    <span class="text-primary">&lt;EnokiProvider&gt;</span>      <span class="text-gray-500">// Enoki zkLogin (enoki preset only)</span>
-      <span class="text-white">&lt;App /&gt;</span>
-    <span class="text-primary">&lt;/EnokiProvider&gt;</span>
-  <span class="text-lavender">&lt;/WalletProvider&gt;</span>
-<span class="text-secondary">&lt;/QueryProvider&gt;</span></code></pre>
-                            </div>
+                        </div>
+                        <div class="px-4 py-2 bg-white/[0.02] border-t border-white/5">
+                            <span class="text-xs font-mono text-gray-500">Note: EnokiProvider only in enoki preset</span>
                         </div>
                     </div>
 
@@ -647,6 +676,53 @@
                                 <li>• Google OAuth integration</li>
                                 <li>• <span class="text-yellow-400">Enoki preset only</span></li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 mt-6">
+                        <h3 class="text-white font-mono font-bold mb-4">React App Component Structure</h3>
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+graph TD
+    App[App.tsx]
+    Layout[Layout Component]
+    Header[Header Navbar]
+    Upload[Upload Component]
+    Gallery[Gallery Component]
+    FileCard[FileCard Component]
+
+    subgraph Hooks
+        UU[useUpload]
+        UD[useDownload]
+        UA[useStorageAdapter]
+        UW[useCurrentAccount]
+    end
+
+    subgraph State
+        LS[localStorage blob tracking]
+        QC[TanStack Cache downloaded blobs]
+    end
+
+    App --> Layout
+    Layout --> Header
+    Layout --> Upload
+    Layout --> Gallery
+    Gallery --> FileCard
+
+    Upload --> UU
+    Gallery --> UD
+    FileCard --> UD
+
+    UU --> UA
+    UD --> UA
+    UA --> UW
+
+    Upload --> LS
+    Gallery --> LS
+    UD --> QC
+                                </pre>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -726,30 +802,63 @@
                     </h2>
                     <p class="text-gray-400 mb-6">SDK-agnostic interface for Walrus storage operations:</p>
 
-                    <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden mb-6">
-                        <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02]">
-                            <span class="text-xs font-mono text-gray-500">base/src/adapters/storage.ts</span>
-                        </div>
-                        <div class="p-6 overflow-x-auto code-scroll">
-                            <pre class="font-mono text-sm leading-relaxed"><code class="language-typescript"><span class="text-secondary">export interface</span> <span class="text-yellow-200">StorageAdapter</span> {
-  <span class="text-gray-500">// Upload file and return blob ID</span>
-  <span class="text-lavender">upload</span>(file: <span class="text-primary">File</span> | <span class="text-primary">Uint8Array</span>, options?: <span class="text-primary">UploadOptions</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">string</span>&gt;;
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h3 class="text-white font-mono font-bold mb-4">Adapter Class Diagram</h3>
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+classDiagram
+    class StorageAdapter {
+        &lt;&lt;interface&gt;&gt;
+        +upload(file, options) Promise
+        +getMetadata(blobId) Promise
+        +download(blobId) Promise
+        +delete(blobId) Promise
+    }
 
-  <span class="text-gray-500">// Retrieve blob metadata</span>
-  <span class="text-lavender">getMetadata</span>(blobId: <span class="text-primary">string</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">BlobMetadata</span>&gt;;
+    class UploadOptions {
+        +epochs number
+        +contentType string
+        +signer any
+    }
 
-  <span class="text-gray-500">// Download blob content</span>
-  <span class="text-lavender">download</span>(blobId: <span class="text-primary">string</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">Uint8Array</span>&gt;;
+    class BlobMetadata {
+        +blobId string
+        +size number
+        +contentType string
+        +uploadedAt Date
+    }
 
-  <span class="text-gray-500">// Remove from local tracking</span>
-  <span class="text-lavender">delete</span>(blobId: <span class="text-primary">string</span>): <span class="text-secondary">Promise</span>&lt;<span class="text-primary">void</span>&gt;;
-}
+    class MystenAdapter {
+        -client WalrusClient
+        +upload(file, options) Promise
+        +getMetadata(blobId) Promise
+        +download(blobId) Promise
+        +delete(blobId) Promise
+    }
 
-<span class="text-secondary">interface</span> <span class="text-yellow-200">UploadOptions</span> {
-  epochs?: <span class="text-primary">number</span>;
-  contentType?: <span class="text-primary">string</span>;
-  signer?: <span class="text-primary">any</span>; <span class="text-gray-500">// Injected by useStorageAdapter hook</span>
-}</code></pre>
+    class TuskyAdapter {
+        -client TuskyClient
+        +upload(file, options) Promise
+        +getMetadata(blobId) Promise
+        +download(blobId) Promise
+        +delete(blobId) Promise
+    }
+
+    class useStorageAdapter {
+        &lt;&lt;hook&gt;&gt;
+        +useStorageAdapter() StorageAdapter
+        -injectSigner() void
+    }
+
+    StorageAdapter &lt;|.. MystenAdapter
+    StorageAdapter &lt;|.. TuskyAdapter
+    StorageAdapter ..&gt; UploadOptions
+    StorageAdapter ..&gt; BlobMetadata
+    MystenAdapter ..&gt; useStorageAdapter
+    TuskyAdapter ..&gt; useStorageAdapter
+                                </pre>
+                            </div>
                         </div>
                     </div>
 
@@ -779,6 +888,44 @@
                         SDK Integration
                     </h2>
                     <p class="text-gray-400 mb-6">Object-based SDK calls with V1 metadata structure (verified 2026-01-18):</p>
+
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h3 class="text-white font-mono font-bold mb-4">SDK Integration Sequence</h3>
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+sequenceDiagram
+    participant App
+    participant Hook
+    participant Adapter
+    participant SDK
+    participant Relay
+    participant Network
+
+    App->>Hook: upload.mutate file
+    Hook->>Adapter: adapter.upload file options
+    Adapter->>Adapter: Prepare blob data
+    Adapter->>SDK: writeBlobToUploadRelay
+    SDK->>Relay: HTTP POST v1 store
+    Relay->>Network: Distribute blob chunks
+    Network-->>Relay: Storage confirmation
+    Relay-->>SDK: Response blobId metadata
+    SDK-->>Adapter: Return blobId
+    Adapter->>Adapter: Parse V1 metadata
+    Adapter-->>Hook: Return blobId string
+    Hook->>Hook: Update TanStack cache
+    Hook-->>App: Success callback
+
+    Note right of App: React Component
+    Note right of Hook: useUpload Hook
+    Note right of Adapter: StorageAdapter
+    Note right of SDK: @mysten/walrus
+    Note right of Relay: Upload Relay
+    Note right of Network: Walrus Network
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden mb-6">
                         <div class="px-4 py-2 border-b border-white/5 bg-white/[0.02]">
@@ -843,6 +990,42 @@
                     </h2>
                     <p class="text-gray-400 mb-6">TanStack Query-powered hooks with wallet integration:</p>
 
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h3 class="text-white font-mono font-bold mb-4">Data Flow: Upload & Download</h3>
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+flowchart LR
+    subgraph UploadFlow[Upload Flow]
+        U1[User selects file] --> U2[useUpload hook]
+        U2 --> U3[useStorageAdapter]
+        U3 --> U4{Wallet connected?}
+        U4 -->|No| U5[Error: Connect wallet]
+        U4 -->|Yes| U6[Inject signer]
+        U6 --> U7[StorageAdapter upload]
+        U7 --> U8[SDK writeBlobToUploadRelay]
+        U8 --> U9[Walrus Network]
+        U9 --> U10[Return blobId]
+        U10 --> U11[Save to localStorage]
+        U11 --> U12[Update UI]
+    end
+
+    subgraph DownloadFlow[Download Flow]
+        D1[User clicks download] --> D2[useDownload hook]
+        D2 --> D3[Check TanStack cache]
+        D3 -->|Cached| D4[Return cached data]
+        D3 -->|Not cached| D5[StorageAdapter download]
+        D5 --> D6[SDK readBlob]
+        D6 --> D7[Walrus Network]
+        D7 --> D8[Return Uint8Array]
+        D8 --> D9[Cache for 5min]
+        D9 --> D10[Render in UI]
+    end
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="glass-card rounded-xl p-6">
                             <h3 class="text-primary font-mono font-bold mb-3">useUpload</h3>
@@ -899,6 +1082,49 @@ upload.<span class="text-lavender">mutate</span>({
                             <div>
                                 <h4 class="text-yellow-400 font-bold mb-1 font-mono text-sm">Beta Status</h4>
                                 <p class="text-yellow-200/80 text-sm">Scaffolding complete, authentication logic implementation pending</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h3 class="text-white font-mono font-bold mb-4">Dual-Auth Flow Diagram</h3>
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+sequenceDiagram
+    participant U
+    participant App
+    participant Enoki
+    participant Google
+    participant Wallet
+    participant Walrus
+
+    alt zkLogin Authentication
+        U->>App: Login with Google
+        App->>Enoki: initiate zkLogin
+        Enoki->>Google: OAuth redirect
+        Google->>U: Consent screen
+        U->>Google: Approve
+        Google->>Enoki: OAuth callback
+        Enoki->>Enoki: Generate zkProof
+        Enoki->>App: zkLogin session
+        App->>Walrus: Upload with zkSigner
+    else Standard Wallet Auth
+        U->>App: Connect Wallet
+        App->>Wallet: Request connection
+        Wallet->>U: Approve transaction
+        U->>Wallet: Sign
+        Wallet->>App: Connected account
+        App->>Walrus: Upload with wallet signer
+    end
+
+    Note right of U: User
+    Note right of App: React App
+    Note right of Enoki: EnokiProvider
+    Note right of Google: Google OAuth
+    Note right of Wallet: Sui Wallet
+    Note right of Walrus: Walrus Network
+                                </pre>
                             </div>
                         </div>
                     </div>
@@ -1011,6 +1237,32 @@ upload.<span class="text-lavender">mutate</span>({
                         <span class="material-symbols-outlined text-primary">map</span>
                         Future Roadmap
                     </h2>
+
+                    <div class="glass-card rounded-xl p-6 mb-6">
+                        <h3 class="text-white font-mono font-bold mb-4">Development Timeline</h3>
+                        <div class="bg-[#09090b] rounded-lg border border-white/10 overflow-hidden">
+                            <div class="p-6 overflow-x-auto">
+                                <pre class="mermaid">
+gantt
+    title Walrus Starter Kit Roadmap
+    dateFormat YYYY-MM-DD
+    section Completed
+    CLI Foundation          :done, p1, 2024-11-01, 2024-11-15
+    React Presets (Mysten)  :done, p2, 2024-11-16, 2024-12-01
+    Testing & Validation    :done, p3, 2024-12-02, 2024-12-15
+    Enoki Scaffolding       :done, p4, 2024-12-16, 2025-01-18
+    section In Progress
+    Enoki Auth Logic        :active, p5, 2025-01-19, 2025-02-15
+    section Planned
+    Walrus Sites Deploy     :p11, 2025-02-16, 2025-03-15
+    Vue.js Templates        :p12, 2025-03-16, 2025-04-15
+    Tusky SDK               :p13a, 2025-04-16, 2025-05-15
+    Hibernuts SDK           :p13b, 2025-05-16, 2025-06-15
+                                </pre>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="space-y-3">
                         <div class="glass-card rounded-xl p-6 border-l-4 border-l-yellow-500">
                             <div class="flex justify-between items-start mb-2">
